@@ -31,19 +31,19 @@ const Task: React.FC<ITaskProps> = ({task}) => {
         })
         .catch(error =>{
             console.error("Erro ao editar tarefa:", error)
+            setTaskToEdit('')
         })
-    setTaskToEdit('')
 }
    
-const handleDeleteTask = async (id: number) => {
+const handleDeleteTask = async () => {
     await axios.delete(`http://localhost:5000/delete-task/${task.id}`).then(() => {
         setOpenModalDeleted(false);
         router.refresh();
     })
     .catch(error =>{
         console.error("Erro ao excluir tarefas:", error)
+        setTaskToEdit('')
     })
-setTaskToEdit('')
 }
   return (
     <tr key={task.id}>
@@ -63,7 +63,7 @@ setTaskToEdit('')
     <Modal modalOpen={openModalDeleted} setModalOpen={setOpenModalDeleted}>
            <h3 className="text-lg">Você tem certeza que deseja deletar essa tarefa?</h3>
            <div className="modal-action">
-            <button onClick={()=> handleDeleteTask(task.id)} className="btn btn-success">Sim</button>
+            <button onClick={handleDeleteTask} className="btn btn-success">Sim</button>
            </div>
         </Modal>
     </td>
