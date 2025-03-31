@@ -17,6 +17,8 @@ interface ITaskProps {
     onTaskUpdate: () => void;
 }
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const Task: React.FC<ITaskProps> = ({task}) => {
     const router = useRouter();
     const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
@@ -24,7 +26,7 @@ const Task: React.FC<ITaskProps> = ({task}) => {
     const [taskToEdit, setTaskToEdit] = useState<string>(task.task_item);
     const handleEditTask: FormEventHandler<HTMLFormElement> = async (e) => {      
          e.preventDefault();  
-        await axios.put(`http://localhost:5000/edit-task/${task.id}`,{task_item: taskToEdit})
+        await axios.put(`${API_BASE_URL}/edit-task/${task.id}`,{task_item: taskToEdit})
         .then(() => {
             setOpenModalEdit(false);
             router.refresh();
@@ -36,7 +38,7 @@ const Task: React.FC<ITaskProps> = ({task}) => {
 }
    
 const handleDeleteTask = async () => {
-    await axios.delete(`http://localhost:5000/delete-task/${task.id}`).then(() => {
+    await axios.delete(`${API_BASE_URL}/delete-task/${task.id}`).then(() => {
         setOpenModalDeleted(false);
         router.refresh();
     })

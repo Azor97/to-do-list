@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Task from "./Task";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface ITask {
   id: number;
   task_item: string;
 }
-
 const ToDoList = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
 
 const fetchTasks = () => {
-  axios.get("http://localhost:5000/tasks")
+  axios.get(`${API_BASE_URL}/tasks`)
       .then(response => {
         console.log(response.data); 
         setTasks(response.data.tasks); 

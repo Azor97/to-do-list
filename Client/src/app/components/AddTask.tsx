@@ -6,6 +6,8 @@ import { FormEventHandler, useState } from "react"
 import axios from "axios"
 import { useRouter } from "next/navigation";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const AddTask = () => {
     const router = useRouter();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -13,7 +15,7 @@ const AddTask = () => {
     
     const handleAddTask: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/new-task', {task_item: taskValue})
+        axios.post(`${API_BASE_URL}/new-task`, {task_item: taskValue})
           .then(() => {
             setNewTask('');
             setModalOpen(false);
